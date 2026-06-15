@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSA Quiz Master</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo" id="logo">SSA Quiz Master</div>
+    <div class="nav-buttons">
+      <button class="btn" id="btnHome">Dashboard</button>
+      <button class="btn" id="btnStudy">Chế độ Học</button>
+      <button class="btn btn-primary" id="btnTest">Chế độ Kiểm tra</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="dashboard" class="screen active">
+      <div class="welcome-card">
+        <h1>SSA Quiz Master</h1>
+        <p>Luyện toàn bộ 149 câu SSA từ ảnh slide gốc, có chế độ học hiện đáp án ngay và chế độ kiểm tra ngẫu nhiên có tính giờ.</p>
+        <div class="nav-buttons" style="justify-content:center">
+          <button class="btn btn-primary" data-go="study">Bắt đầu học</button>
+          <button class="btn" data-go="testSetup">Làm bài kiểm tra</button>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <article class="mode-card" data-go="study">
+          <span class="mode-badge">Self-paced</span>
+          <h2>Chế độ Học tập</h2>
+          <p>Xem từng câu theo thứ tự, chọn đáp án để biết đúng sai ngay, nhảy nhanh tới câu bất kỳ và xem đáp án chuẩn.</p>
+          <button class="btn">Vào học ngay</button>
+        </article>
+        <article class="mode-card" data-go="testSetup">
+          <span class="mode-badge">Evaluation</span>
+          <h2>Chế độ Kiểm tra</h2>
+          <p>Chọn số lượng câu, đề được trộn ngẫu nhiên, làm bài bằng A/B/C/D rồi xem điểm và danh sách câu sai.</p>
+          <button class="btn btn-primary">Thi thử ngay</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="study" class="screen">
+      <div class="workspace">
+        <div class="viewer-card">
+          <div class="slide-header">
+            <span class="slide-number" id="studyTitle">Câu 1</span>
+            <span class="pill" id="studyCount">1 / 149</span>
+          </div>
+          <div class="image-box"><img id="studyImg" alt="Ảnh câu hỏi"></div>
+          <div class="question-text" id="studyQuestion"></div>
+        </div>
+        <aside class="side-card">
+          <div class="panel-header">
+            <h2>Học tập</h2>
+            <span class="pill" id="studyAnswerPill">Đáp án</span>
+          </div>
+          <div class="options-grid" id="studyOptions"></div>
+          <div class="feedback" id="studyFeedback"></div>
+          <div class="navigator-box">
+            <button class="btn" id="studyPrev">Lùi</button>
+            <button class="btn btn-primary" id="studyNext">Tiếp</button>
+          </div>
+          <div class="jump-row">
+            <input id="studyJumpInput" type="number" min="1" placeholder="Nhập số câu">
+            <button class="btn" id="studyJump">Đi tới</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="testSetup" class="screen">
+      <div class="panel setup-container">
+        <h2>Thiết lập bài kiểm tra</h2>
+        <p class="muted">Chọn số câu muốn làm. Đề sẽ được trộn ngẫu nhiên mỗi lần bắt đầu.</p>
+        <div class="setup-options" id="setupChoices">
+          <div class="setup-choice active" data-count="10">10 câu</div>
+          <div class="setup-choice" data-count="25">25 câu</div>
+          <div class="setup-choice" data-count="50">50 câu</div>
+          <div class="setup-choice" data-count="149">Tất cả 149</div>
+        </div>
+        <button class="btn btn-primary" id="startTest" style="width:100%">Bắt đầu</button>
+      </div>
+    </section>
+
+    <section id="test" class="screen">
+      <div class="progress-container">
+        <div class="progress-top"><span id="testProgressText"></span><span id="timer">00:00</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+      <div class="workspace">
+        <div class="viewer-card">
+          <div class="slide-header">
+            <span class="slide-number" id="testTitle">Câu hỏi</span>
+            <span class="pill" id="answeredCount">0 đã trả lời</span>
+          </div>
+          <div class="image-box"><img id="testImg" alt="Ảnh câu hỏi kiểm tra"></div>
+          <div class="question-text" id="testQuestion"></div>
+        </div>
+        <aside class="side-card">
+          <h2>Chọn đáp án</h2>
+          <div class="options-grid" id="testOptions"></div>
+          <div class="navigator-box">
+            <button class="btn" id="testPrev">Lùi</button>
+            <button class="btn btn-primary" id="testNext">Tiếp</button>
+          </div>
+          <button class="btn btn-danger" id="finishTest" style="width:100%; margin-top:10px">Nộp bài</button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="results" class="screen">
+      <div class="result-card">
+        <h2>Kết quả</h2>
+        <div class="score" id="scorePercent">0%</div>
+        <p class="muted" id="scoreGrade"></p>
+        <div class="stats">
+          <div class="stat">Đúng<strong id="scoreCorrect">0 / 0</strong></div>
+          <div class="stat">Thời gian<strong id="scoreTime">00:00</strong></div>
+          <div class="stat">Bỏ trống<strong id="scoreBlank">0</strong></div>
+        </div>
+        <div class="nav-buttons" style="justify-content:center">
+          <button class="btn btn-primary" id="againTest">Làm lại</button>
+          <button class="btn" data-go="study">Ôn lại</button>
+        </div>
+        <div class="review-list" id="reviewList"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
